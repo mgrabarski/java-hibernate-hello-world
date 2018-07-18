@@ -12,12 +12,16 @@ import org.hibernate.query.Query;
 public class Main {
 
     public static void main(String[] args) {
-        SessionFactory factory = new Configuration().configure().buildSessionFactory();
-        Session session = factory.openSession();
+        Country poland = null;
 
-        Query<Country> query = session.createQuery("FROM Country c WHERE c.code ='POL'");
-        query.setMaxResults(10);
+        try (SessionFactory factory = new Configuration().configure().buildSessionFactory();
+        Session session = factory.openSession();) {
 
-        query.getResultStream().forEach(city -> System.out.println(city));
+            Query<Country> query = session.createQuery("FROM Country c WHERE c.code ='POL'");
+            query.setMaxResults(10);
+
+            poland = query.uniqueResult();
+        }
+        System.out.println(poland);
     }
 }

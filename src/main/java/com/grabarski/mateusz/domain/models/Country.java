@@ -16,7 +16,7 @@ public class Country {
     @Column(name = "Name")
     private String name;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "Capital")
     private City capital;
 
