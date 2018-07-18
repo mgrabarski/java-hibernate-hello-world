@@ -9,23 +9,18 @@ import javax.persistence.*;
 @Table(name = "city")
 public class City {
 
-    public static final String ID_COLUMN = "ID";
-    public static final String NAME_COLUMN = "Name";
-    public static final String COUNTRY_CODE_COLUMN = "CountryCode";
-    public static final String DISTRICT_COLUMN = "District";
-
     @Id // primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY) // database generate id
-    @Column(name = ID_COLUMN)
+    @Column(name = "ID")
     private int id;
 
-    @Column(name = NAME_COLUMN)
+    @Column(name = "Name")
     private String name;
 
-    @Column(name = COUNTRY_CODE_COLUMN)
+    @Column(name = "CountryCode")
     private String countryCode;
 
-    @Column(name = DISTRICT_COLUMN)
+    @Column(name = "District")
     private String district;
 
     public City() {
