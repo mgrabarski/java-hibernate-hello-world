@@ -57,3 +57,33 @@ Using other database then MySQL need to be included correct config:
  @Column(name = "Name")
  ```
  
+ #### Relations:
+ ```java
+ @OneToOne
+ @OneToMany
+ @ManyToOne
+ @ManyToMany
+ ```
+ 
+ In relations is parameter fetch with default EAGLE option.
+  ```java
+ @OneToOne(fetch = FetchType.EAGLE)
+  ```
+  
+ EAGLE - every time ask proxy for child object
+ LAZY - query create proxy and know how to ask database for object by id
+ 
+ If we need child object but relation is set as LAZY then in query need to be added JOIN FETCH
+  ```java
+ Query<Country> query = session.createQuery("FROM Country c JOIN FETCH c.capital WHERE c.code ='POL'");
+  ```
+  
+ #### Set parameters in Query
+ 
+Example:
+```java
+ Query<Country> query = session.createQuery("FROM Country c JOIN FETCH " +
+    "c.capital WHERE c.code =:code");
+ query.setParameter("code", "POL");
+ poland = query.uniqueResult();
+ ```
