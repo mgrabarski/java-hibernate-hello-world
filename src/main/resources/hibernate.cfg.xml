@@ -15,7 +15,7 @@
         <!-- Assume test is the database name -->
 
         <property name = "hibernate.connection.url">
-            jdbc:mysql://localhost:3306/world_x
+            jdbc:mysql://localhost:3306/world_x?verifyServerCertificate=false&amp;useSSL=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC
         </property>
 
         <property name = "hibernate.connection.username">
