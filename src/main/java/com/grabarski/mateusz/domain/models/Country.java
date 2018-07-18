@@ -1,9 +1,6 @@
 package com.grabarski.mateusz.domain.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by Mateusz Grabarski on 18.07.2018.
@@ -19,8 +16,9 @@ public class Country {
     @Column(name = "Name")
     private String name;
 
-    @Column(name = "Capital")
-    private int capital;
+    @OneToOne
+    @JoinColumn(name = "Capital")
+    private City capital;
 
     @Column(name = "Code2")
     private String code2;
@@ -44,11 +42,11 @@ public class Country {
         this.name = name;
     }
 
-    public int getCapital() {
+    public City getCapital() {
         return capital;
     }
 
-    public void setCapital(int capital) {
+    public void setCapital(City capital) {
         this.capital = capital;
     }
 

@@ -1,6 +1,6 @@
 package com.grabarski.mateusz;
 
-import com.grabarski.mateusz.domain.models.City;
+import com.grabarski.mateusz.domain.models.Country;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -15,7 +15,7 @@ public class Main {
         SessionFactory factory = new Configuration().configure().buildSessionFactory();
         Session session = factory.openSession();
 
-        Query<City> query = session.createQuery("FROM City c WHERE c.countryCode ='POL'");
+        Query<Country> query = session.createQuery("FROM Country c WHERE c.code ='POL'");
         query.setMaxResults(10);
 
         query.getResultStream().forEach(city -> System.out.println(city));
