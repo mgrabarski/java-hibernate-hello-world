@@ -17,11 +17,19 @@ public class Main {
         try (SessionFactory factory = new Configuration().configure().buildSessionFactory();
         Session session = factory.openSession();) {
 
-            Query<Country> query = session.createQuery("FROM Country c JOIN FETCH c.capital WHERE c.code ='POL'");
-            query.setMaxResults(10);
-
+            Query<Country> query = session.createQuery("FROM Country c JOIN FETCH " +
+                    "c.capital WHERE c.code =:code");
+            query.setParameter("code", "POL");
             poland = query.uniqueResult();
+
+            poland.getCities().forEach(city -> System.out.println(city.getName()));
+
+//            Query<City> query = session.createQuery("FROM City c WHERE c.country.name = 'France'");
+//            query.setMaxResults(10);
+//
+//            query.stream().forEach(city -> System.out.println(city.getName() + " " +
+//                    city.getCountryCode().getName()));
         }
-        System.out.println(poland);
+//        System.out.println(poland);
     }
 }
