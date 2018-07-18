@@ -17,7 +17,7 @@ public class Main {
         try (SessionFactory factory = new Configuration().configure().buildSessionFactory();
         Session session = factory.openSession();) {
 
-            Query<Country> query = session.createQuery("FROM Country c WHERE c.code ='POL'");
+            Query<Country> query = session.createQuery("FROM Country c JOIN FETCH c.capital WHERE c.code ='POL'");
             query.setMaxResults(10);
 
             poland = query.uniqueResult();
