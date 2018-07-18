@@ -1,6 +1,7 @@
 package com.grabarski.mateusz.domain.models;
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Created by Mateusz Grabarski on 18.07.2018.
@@ -22,6 +23,9 @@ public class Country {
 
     @Column(name = "Code2")
     private String code2;
+
+    @OneToMany(mappedBy = "country")
+    private Set<City> cities;
 
     public Country() {
     }
@@ -56,5 +60,13 @@ public class Country {
 
     public void setCode2(String code2) {
         this.code2 = code2;
+    }
+
+    public Set<City> getCities() {
+        return cities;
+    }
+
+    public void setCities(Set<City> cities) {
+        this.cities = cities;
     }
 }
