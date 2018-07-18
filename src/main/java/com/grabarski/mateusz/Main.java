@@ -15,7 +15,7 @@ public class Main {
         SessionFactory factory = new Configuration().configure().buildSessionFactory();
         Session session = factory.openSession();
 
-        Query<City> query = session.createQuery("FROM City");
+        Query<City> query = session.createQuery("FROM City c WHERE c.countryCode ='POL'");
         query.setMaxResults(10);
 
         query.getResultStream().forEach(city -> System.out.println(city));

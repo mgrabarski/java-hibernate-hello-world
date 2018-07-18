@@ -1,1 +1,2 @@
-# java-hibernate-hello-world
+# Hibernate Hello World!
+
