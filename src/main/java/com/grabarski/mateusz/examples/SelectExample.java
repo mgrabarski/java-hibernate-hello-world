@@ -1,7 +1,7 @@
 package com.grabarski.mateusz.examples;
 
 import com.grabarski.mateusz.domain.CityNameDistrict;
-import com.grabarski.mateusz.domain.models.Country;
+import com.grabarski.mateusz.domain.selects.CountryWithCountryCode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -16,13 +16,7 @@ public class SelectExample {
         try (SessionFactory factory = new Configuration().configure().buildSessionFactory();
              Session session = factory.openSession()) {
 
-            Query<Country> query = session.createQuery("" +
-                    "SELECT c " +
-                    "FROM Country c JOIN c.countryLanguages l " +
-                    "WHERE l.id.language = 'Polish'");
-            query.setMaxResults(10);
-
-            query.stream().forEach(country -> System.out.println(country.getName() + ": " + country.getCountryLanguages()));
+            displayCountriesWithCodes(session);
         }
     }
 
@@ -55,5 +49,13 @@ public class SelectExample {
         query.setParameter("district", district);
 
         query.stream().forEach(s -> System.out.println(s));
+    }
+
+    private static void displayCountriesWithCodes(Session session) {
+        Query<CountryWithCountryCode> query = session.createQuery(
+                "SELECT new com.grabarski.mateusz.domain.selects.CountryWithCountryCode(c.name, c.code) FROM Country c ");
+        query.setMaxResults(10);
+
+        query.stream().forEach(countryWithCountryCode -> System.out.println(countryWithCountryCode.getName() + ", " + countryWithCountryCode.getCode()));
     }
 }
