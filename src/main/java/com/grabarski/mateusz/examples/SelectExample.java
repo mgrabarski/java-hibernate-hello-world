@@ -1,6 +1,7 @@
 package com.grabarski.mateusz.examples;
 
 import com.grabarski.mateusz.domain.CityNameDistrict;
+import com.grabarski.mateusz.domain.models.Country;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -15,20 +16,13 @@ public class SelectExample {
         try (SessionFactory factory = new Configuration().configure().buildSessionFactory();
              Session session = factory.openSession()) {
 
-            findCityNamesByDistrict(session, "Pomorskie");
-            /*
-            Napisać i przetestować zapytania w HQL realizujące następujące zadania:
-znalezienie nazw wszystkich miast w zadanym regionie
-znalezienie państw wraz z ich dwuliterowymi kodami bez pobierania innych danych
-znalezienie państw posiadających jeden używany język
-znalezienie państw posiadających jeden oficjalny język
-znalezienie wszystkich państw, w których mówi się w zadanym języku
-znalezienie wszystkich państw, w których zadany język jest urzędowy
-znalezienie państwa o najmniejszej liczbie powiązanych miast
-znalezienie państwa o największej liczbie języków
-znalezienie średniej ilośći języków używanych we wszystkich państwach
-znalezienie średniej ilośći miast powiązanych ze wszystkimi państwami
-             */
+            Query<Country> query = session.createQuery("" +
+                    "SELECT c " +
+                    "FROM Country c JOIN c.countryLanguages l " +
+                    "WHERE l.id.language = 'Polish'");
+            query.setMaxResults(10);
+
+            query.stream().forEach(country -> System.out.println(country.getName() + ": " + country.getCountryLanguages()));
         }
     }
 
@@ -56,8 +50,9 @@ znalezienie średniej ilośći miast powiązanych ze wszystkimi państwami
     }
 
     private static void findCityNamesByDistrict(Session session, String district) {
-        Query<String> query = session.createQuery("SELECT c.name FROM City c WHERE c.district LIKE district");
+        Query<String> query = session.createQuery("SELECT c.name FROM City c WHERE c.district =:district");
         query.setMaxResults(10);
+        query.setParameter("district", district);
 
         query.stream().forEach(s -> System.out.println(s));
     }

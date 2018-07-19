@@ -27,6 +27,9 @@ public class Country {
     @OneToMany(mappedBy = "country")
     private Set<City> cities;
 
+    @OneToMany(mappedBy = "country")
+    private Set<CountryLanguage> countryLanguages;
+
     public Country() {
     }
 
@@ -68,5 +71,13 @@ public class Country {
 
     public void setCities(Set<City> cities) {
         this.cities = cities;
+    }
+
+    public Set<CountryLanguage> getCountryLanguages() {
+        return countryLanguages;
+    }
+
+    public void setCountryLanguages(Set<CountryLanguage> countryLanguages) {
+        this.countryLanguages = countryLanguages;
     }
 }
