@@ -22,6 +22,11 @@ public class CountryLanguage {
     @Column(name = "percentage")
     private float percentage;
 
+    @ManyToOne
+    @JoinColumn(name = "countryCode")
+    @MapsId("countryCode")
+    private Country country;
+
     public CountryLanguageId getId() {
         return id;
     }
@@ -44,5 +49,13 @@ public class CountryLanguage {
 
     public void setPercentage(float percentage) {
         this.percentage = percentage;
+    }
+
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
     }
 }

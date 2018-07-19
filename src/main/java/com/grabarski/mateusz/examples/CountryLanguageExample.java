@@ -15,10 +15,11 @@ public class CountryLanguageExample {
         try (SessionFactory factory = new Configuration().configure().buildSessionFactory();
              Session session = factory.openSession()) {
 
-            Query<CountryLanguage> query = session.createQuery("FROM  CountryLanguage ");
+            Query<CountryLanguage> query = session.createQuery("FROM  CountryLanguage cl WHERE cl.country.name = 'Canada'" +
+                    "AND cl.isOfficial = 'T'");
             query.setMaxResults(10);
 
-            query.stream().forEach(countryLanguage -> System.out.println(countryLanguage.getId().getCountryCode()));
+            query.stream().forEach(countryLanguage -> System.out.println(countryLanguage.getId().getLanguage()));
         }
     }
 }
