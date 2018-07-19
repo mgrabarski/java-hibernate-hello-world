@@ -16,7 +16,8 @@ public class CountExample {
 
             Query<Object[]> query = session.createQuery(
                     "SELECT c.name, c.countryLanguages.size " +
-                            "FROM Country c");
+                            "FROM Country c " +
+                            "WHERE c.countryLanguages.size > 0 ");
 
             query.setMaxResults(30);
 
