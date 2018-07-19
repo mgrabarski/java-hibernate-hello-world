@@ -17,7 +17,7 @@ public class SelectExample {
         try (SessionFactory factory = new Configuration().configure().buildSessionFactory();
              Session session = factory.openSession()) {
 
-            displayCountriesWithOneOfficialLanguage(session);
+            displayAllCountriesWhereUsingInputLanguage(session, "Polish");
         }
     }
 
@@ -68,6 +68,15 @@ public class SelectExample {
                 "       FROM CountryLanguage cl " +
                 "       WHERE cl.country = c AND cl.isOfficial = 'T' ) " +
                 "= 1");
+
+        query.stream().forEach(country -> System.out.println(country.getName()));
+    }
+
+    private static void displayAllCountriesWhereUsingInputLanguage(Session session, String language) {
+        Query<Country> query = session.createQuery(
+                "SELECT c FROM Country c JOIN c.countryLanguages l " +
+                        "WHERE l.id.language =:language");
+        query.setParameter("language", language);
 
         query.stream().forEach(country -> System.out.println(country.getName()));
     }
