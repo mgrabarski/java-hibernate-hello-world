@@ -1,6 +1,7 @@
 package com.grabarski.mateusz.examples;
 
 import com.grabarski.mateusz.domain.CityNameDistrict;
+import com.grabarski.mateusz.domain.models.Country;
 import com.grabarski.mateusz.domain.selects.CountryWithCountryCode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -16,7 +17,7 @@ public class SelectExample {
         try (SessionFactory factory = new Configuration().configure().buildSessionFactory();
              Session session = factory.openSession()) {
 
-            displayCountriesWithCodes(session);
+            displayCountriesWithOneOfficialLanguage(session);
         }
     }
 
@@ -57,5 +58,17 @@ public class SelectExample {
         query.setMaxResults(10);
 
         query.stream().forEach(countryWithCountryCode -> System.out.println(countryWithCountryCode.getName() + ", " + countryWithCountryCode.getCode()));
+    }
+
+    private static void displayCountriesWithOneOfficialLanguage(Session session) {
+        Query<Country> query = session.createQuery("" +
+                "FROM Country  c " +
+                "WHERE " +
+                "(SELECT COUNT(*) " +
+                "       FROM CountryLanguage cl " +
+                "       WHERE cl.country = c AND cl.isOfficial = 'T' ) " +
+                "= 1");
+
+        query.stream().forEach(country -> System.out.println(country.getName()));
     }
 }
