@@ -1,6 +1,7 @@
 package com.grabarski.mateusz.examples;
 
 import com.grabarski.mateusz.domain.CityNameDistrict;
+import com.grabarski.mateusz.domain.models.City;
 import com.grabarski.mateusz.domain.models.Country;
 import com.grabarski.mateusz.domain.selects.CountryWithCountryCode;
 import org.hibernate.Session;
@@ -17,7 +18,8 @@ public class SelectExample {
         try (SessionFactory factory = new Configuration().configure().buildSessionFactory();
              Session session = factory.openSession()) {
 
-            displayAllCountriesWhereUsingLanguageIsOfficial(session, "Polish");
+            Query<City> countryQuery = session.createQuery(" FROM City c WHERE c.country.name = 'Poland'");
+            countryQuery.stream().forEach(country -> System.out.println(country.getName()));
         }
     }
 
