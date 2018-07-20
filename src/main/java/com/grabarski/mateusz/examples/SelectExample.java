@@ -19,7 +19,7 @@ public class SelectExample {
              Session session = factory.openSession()) {
 
             Query<City> countryQuery = session.createQuery(" FROM City c WHERE c.country.name = 'Poland'");
-            countryQuery.stream().forEach(country -> System.out.println(country.getName()));
+            countryQuery.stream().forEach(country -> System.out.println(country.getName() + ", " + country.getDistrict()));
         }
     }
 
