@@ -27,7 +27,7 @@ public class Country {
     @OneToMany(mappedBy = "country", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<City> cities;
 
-    @OneToMany(mappedBy = "country")
+    @OneToMany(mappedBy = "country", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<CountryLanguage> countryLanguages;
 
     public Country() {
@@ -85,6 +85,13 @@ public class Country {
         if (city != null) {
             this.cities.add(city);
             city.setCountryCode(this);
+        }
+    }
+
+    public void addLanguage(CountryLanguage language) {
+        if (language != null) {
+            this.countryLanguages.add(language);
+            language.setCountry(this);
         }
     }
 }
