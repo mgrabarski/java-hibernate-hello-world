@@ -6,7 +6,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.query.Query;
 
 /**
  * Created by Mateusz Grabarski on 19.07.2018.
@@ -19,16 +18,14 @@ public class InsertCityExample {
 
             City newCity = new City();
             newCity.setName("Ciechocinek");
-            newCity.setDistrict("śląskie");
+            newCity.setDistrict("Gliwice2");
 
-            Query<Country> countryQuery = session.createQuery(" FROM Country c WHERE c.name = 'Poland'");
+            Country poland = session.load(Country.class, "POL");
 
-            Country poland = countryQuery.uniqueResult();
-
-            newCity.setCountryCode(poland);
+            poland.addCity(newCity);
 
             Transaction transaction = session.beginTransaction();
-            session.save(newCity);
+            session.save(poland);
             transaction.commit();
         }
     }
