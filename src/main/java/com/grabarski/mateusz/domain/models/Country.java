@@ -1,7 +1,7 @@
 package com.grabarski.mateusz.domain.models;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 /**
  * Created by Mateusz Grabarski on 18.07.2018.
@@ -25,10 +25,10 @@ public class Country {
     private String code2;
 
     @OneToMany(mappedBy = "country", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<City> cities;
+    private List<City> cities;
 
     @OneToMany(mappedBy = "country", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<CountryLanguage> countryLanguages;
+    private List<CountryLanguage> countryLanguages;
 
     public Country() {
     }
@@ -65,19 +65,19 @@ public class Country {
         this.code2 = code2;
     }
 
-    public Set<City> getCities() {
+    public List<City> getCities() {
         return cities;
     }
 
-    public void setCities(Set<City> cities) {
+    public void setCities(List<City> cities) {
         this.cities = cities;
     }
 
-    public Set<CountryLanguage> getCountryLanguages() {
+    public List<CountryLanguage> getCountryLanguages() {
         return countryLanguages;
     }
 
-    public void setCountryLanguages(Set<CountryLanguage> countryLanguages) {
+    public void setCountryLanguages(List<CountryLanguage> countryLanguages) {
         this.countryLanguages = countryLanguages;
     }
 
